@@ -3,21 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 const App = () => {
+  const [name, setName] = React.useState('Angus');
+
+  const changeNameToBoB = () => {
+    // use the setName function to change actually change the value of name
+    setName('Bob');
+  };
+
   return (
     <div className='App'>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+        <p>Hi {name}!</p>
+        <button onClick={changeNameToBoB}>Change Name</button>
       </header>
     </div>
   );
