@@ -32,3 +32,31 @@ $ npm install -g npx
 $ npx create-react-app monster-rolodex --template typescript # using typescript
 ...
 ```
+
+### Play with our first state
+
+Before we dive into detail of the project, let't take a look of 'state'. State is
+a way how we can manage and store data that can change over time.
+
+In the functional component, we can use the `useState` - a **Hooks** to manage state.
+
+```ts
+const App = () => {
+  const [name, setName] = React.useState('Angus');
+
+  const changeNameToBoB = () => {
+    // use the setName function to change actually change the value of name
+    setName('Bob');
+  };
+
+  return (
+    <div className='App'>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
+        <p>Hi {name}!</p>
+        <button onClick={changeNameToBoB}>Change Name</button>
+      </header>
+    </div>
+  );
+};
+```
