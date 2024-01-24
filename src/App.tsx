@@ -1,22 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 const App = () => {
-  const [name, setName] = React.useState('Angus');
-
-  const changeNameToBoB = () => {
-    // use the setName function to change actually change the value of name
-    setName('Bob');
-  };
+  const monsters = [
+    {
+      id: '1',
+      name: 'Linda',
+    },
+    {
+      id: '2',
+      name: 'Frank',
+    },
+    {
+      id: '3',
+      name: 'Jacky',
+    },
+  ];
 
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>Hi {name}!</p>
-        <button onClick={changeNameToBoB}>Change Name</button>
-      </header>
+      {monsters.map((monster) => {
+        return (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        );
+      })}
     </div>
   );
 };
