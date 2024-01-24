@@ -60,3 +60,45 @@ const App = () => {
   );
 };
 ```
+
+### Using array to build the rolodex
+
+In the rolodex, we'll gonna have a lot of monsters, and let's see how we can
+handle that using array.
+
+```ts
+const App = () => {
+  // store the monsters in a array
+  const monsters = [
+    {
+      id: '1',
+      name: 'Linda',
+    },
+    {
+      id: '2',
+      name: 'Frank',
+    },
+    {
+      id: '3',
+      name: 'Jacky',
+    },
+  ];
+
+  return (
+    <div className='App'>
+      // map will return a new array which in this case will be
+      // an array of <div> and <h1> tag element
+      {monsters.map((monster) => {
+        return (
+         // do make sure set the unique key for each element
+         // to differentiating each element for react to optimize
+         // the code
+         <div key={monster.id}>
+           <h1>{monster.name}</h1>
+         </div>
+        );
+      })}
+    </div>
+  );
+};
+```
