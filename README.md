@@ -142,3 +142,60 @@ const App = () => {
   );
 };
 ```
+
+### Searching in rolodex
+
+Now that we have a list of monsters, let's implement the search functionality.
+
+```ts
+const App = () => {
+  // create a state to store and manage value of searchField
+  const [searchField, setSearchField] = React.useState('');
+  const [monsters, setMonsters] = React.useState<Monster[]>([]);
+  // create a state to store and manage the value of filtered monsters
+  const [filteredMonsters, setFilteredMonsters] = React.useState<Monster[]>([]);
+
+  React.useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((users: Monster[]) => setMonsters(users));
+  }, []);
+
+  // useEffect hook to handle filtering of monsters based on searchField
+  React.useEffect(() => {
+    // filter monsters whose name includes the `searchField` text (case-insensitive)
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField)
+    );
+    // update the state with the filtered monsters
+    setFilteredMonsters(filteredMonsters);
+  }, [monsters, searchField]);
+
+  // event handler to update the searchField state when the input changes
+  const handleSearchFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value.toLocaleLowerCase();
+    setSearchField(value);
+  };
+
+  return (
+    <div className='App'>
+      {/* Input field for searching monsters */}
+      <input
+        className='search-box'
+        type='search'
+        placeholder='Search monsters'
+        onChange={handleSearchFieldChange}
+      />
+      {filteredMonsters.map((monster) => {
+        return (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+```
