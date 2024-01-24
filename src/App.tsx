@@ -1,21 +1,20 @@
 import React from 'react';
 import './App.css';
 
+type Monster = {
+  id: string;
+  name: string;
+  email: string;
+};
+
 const App = () => {
-  const monsters = [
-    {
-      id: '1',
-      name: 'Linda',
-    },
-    {
-      id: '2',
-      name: 'Frank',
-    },
-    {
-      id: '3',
-      name: 'Jacky',
-    },
-  ];
+  const [monsters, setMonsters] = React.useState<Monster[]>([]);
+
+  React.useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((users: Monster[]) => setMonsters(users));
+  }, []);
 
   return (
     <div className='App'>
