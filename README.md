@@ -102,3 +102,43 @@ const App = () => {
   );
 };
 ```
+
+### Fetch monsters by calling API
+
+In the real world, data will not be hard coded most of time, so we need to
+fetch the data by calling APIs, and here's how we can do it.
+
+```ts
+type Monster = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+const App = () => {
+  // create a state to store and manage monsters
+  const [monsters, setMonsters] = React.useState<Monster[]>([]);
+
+  // use useEffect hook to make sure this action is under react lifecycle
+  React.useEffect(() => {
+    // fetch users data from API
+    fetch('https://jsonplaceholder.typicode.com/users')
+      // convert it to json
+      .then((response) => response.json())
+      // using setMonsters to actually update monsters array
+      .then((users: Monster[]) => setMonsters(users));
+  }, []);
+
+  return (
+    <div className='App'>
+      {monsters.map((monster) => {
+        return (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+```
