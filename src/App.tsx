@@ -1,5 +1,15 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 import './App.css';
+import axios from 'axios';
+
+const fetchMonsters = async () => {
+  const response = await axios.get(
+    'https://jsonplaceholder.typicode.com/users'
+  );
+
+  return response.data;
+};
 
 type Monster = {
   id: string;
@@ -8,17 +18,14 @@ type Monster = {
 };
 
 const App = () => {
-  const [searchField, setSearchField] = React.useState('');
-  const [monsters, setMonsters] = React.useState<Monster[]>([]);
-  const [filteredMonsters, setFilteredMonsters] = React.useState<Monster[]>([]);
+  const [searchField, setSearchField] = useState('');
+  const [filteredMonsters, setFilteredMonsters] = useState<Monster[]>([]);
 
-  React.useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((users: Monster[]) => setMonsters(users));
-  }, []);
+  const { data: monsters } = useQuery<Monster[]>(['monsters'], fetchMonsters);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (!monsters) return;
+
     const filteredMonsters = monsters.filter((monster) =>
       monster.name.toLowerCase().includes(searchField)
     );
