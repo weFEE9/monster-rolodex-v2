@@ -199,3 +199,60 @@ const App = () => {
   );
 };
 ```
+
+#### Using React Query
+
+In the example above, we use `useEffect` hook to trigger `fetch` when component mounted,
+but there is a better way to do it, which is **React Query** (`uesQuery`).
+
+```ts
+const fetchMonsters = async () => {
+  const response = await axios.get(
+    'https://jsonplaceholder.typicode.com/users'
+  );
+
+  return response.data;
+};
+
+const App = () => {
+  const [searchField, setSearchField] = useState('');
+  const [filteredMonsters, setFilteredMonsters] = useState<Monster[]>([]);
+
+  const { data: monsters } = useQuery<Monster[]>(['monsters'], fetchMonsters);
+
+  useEffect(() => {
+    if (!monsters) return; // make sure that `monsters` is not undefined
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField)
+    );
+
+    setFilteredMonsters(filteredMonsters);
+  }, [monsters, searchField]);
+
+  const handleSearchFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value.toLocaleLowerCase();
+    setSearchField(value);
+  };
+
+  return (
+    <div className='App'>
+      <input
+        className='search-box'
+        type='search'
+        placeholder='Search monsters'
+        onChange={handleSearchFieldChange}
+      />
+      {filteredMonsters.map((monster) => {
+        return (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+```
