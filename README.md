@@ -256,3 +256,107 @@ const App = () => {
   );
 };
 ```
+
+### Our first component
+
+Now we have finished the two main feature of **monster rolodex** - search and monster list,
+let's turn these two main feature into a component.
+
+First we will implement the `SearchBox` component:
+
+```ts
+type SearchBoxProps = {
+  placeholder: string;
+  onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+/**
+ * SearchBox component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.placeholder - The placeholder text for the search input.
+ * @param {Function} props.onChangeHandler - The event handler for the input change event.
+ * @returns {JSX.Element} The rendered SearchBox component.
+ */
+const SearchBox = ({ placeholder, onChangeHandler }: SearchBoxProps) => {
+  return (
+    <div>
+      <input
+        className='search-box'
+        type='search'
+        placeholder={placeholder}
+        onChange={onChangeHandler}
+      />
+    </div>
+  );
+};
+
+export default SearchBox;
+```
+
+and now let's implement the `CardList`:
+
+```ts
+/**
+ * Represents a monster card.
+ */
+export type Monster = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+/**
+ * Props for the CardList component.
+ */
+type CardListProps = {
+  monsters: Monster[];
+};
+
+/**
+ * Renders a list of monster cards.
+ * @param {CardListProps} props - The component props.
+ * @returns {JSX.Element} The rendered CardList component.
+ */
+const CardList = ({ monsters }: CardListProps) => {
+  return (
+    <div>
+      {monsters.map((monster) => {
+        return (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default CardList;
+```
+
+and finally we can import and use them in the `App.tsx`
+
+```ts
+import SearchBox from './components/search-box/search-box.component';
+import { Monster } from './components/card-list/card-list.component';
+import CardList from './components/card-list/card-list.component';
+
+...
+
+const App = () => {
+
+  ...
+
+  return (
+    <div className='App'>
+      <SearchBox
+        placeholder='search monsters'
+        onChangeHandler={handleSearchFieldChange}
+      />
+      <CardList monsters={filteredMonsters} />
+    </div>
+  );
+};
+```
