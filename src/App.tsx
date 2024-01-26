@@ -3,6 +3,9 @@ import { useQuery } from 'react-query';
 import './App.css';
 import axios from 'axios';
 
+import SearchBox from './components/search-box/search-box.component';
+
+
 const fetchMonsters = async () => {
   const response = await axios.get(
     'https://jsonplaceholder.typicode.com/users'
@@ -42,11 +45,9 @@ const App = () => {
 
   return (
     <div className='App'>
-      <input
-        className='search-box'
-        type='search'
-        placeholder='Search monsters'
-        onChange={handleSearchFieldChange}
+      <SearchBox
+        placeholder='search monsters'
+        onChangeHandler={handleSearchFieldChange}
       />
       {filteredMonsters.map((monster) => {
         return (
