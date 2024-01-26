@@ -360,3 +360,45 @@ const App = () => {
   );
 };
 ```
+
+### Structure our monsters as cards
+
+We haven't use the monsters information yet, let's see how we can use it to represent as rolodex cards. And to do that, let's create a `Card` component:
+
+```ts
+type CardProps = {
+  monster: Monster;
+};
+
+const Card = ({ monster }: CardProps) => {
+  const { id, name, email } = monster;
+  return (
+    <div key={id} className='card-container'>
+      <img
+        alt={`monster ${name}`}
+        src={`https://robohash.org/${id}?set=set2&size=180x180`}
+      />
+      <h2>{name}</h2>
+      <p>{email}</p>
+    </div>
+  );
+};
+
+export default Card;
+```
+
+and then use it in the `CardList`
+
+```ts
+import Card from '../card/card.component';
+
+const CardList = ({ monsters }: CardListProps) => {
+  return (
+    <div className='card-list'>
+      {monsters.map((monster) => {
+        return <Card monster={monster} />;
+      })}
+    </div>
+  );
+};
+```
