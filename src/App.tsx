@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import SearchBox from './components/search-box/search-box.component';
 
+import { Monster } from './components/card-list/card-list.component';
+import CardList from './components/card-list/card-list.component';
 
 const fetchMonsters = async () => {
   const response = await axios.get(
@@ -12,12 +14,6 @@ const fetchMonsters = async () => {
   );
 
   return response.data;
-};
-
-type Monster = {
-  id: string;
-  name: string;
-  email: string;
 };
 
 const App = () => {
@@ -49,13 +45,7 @@ const App = () => {
         placeholder='search monsters'
         onChangeHandler={handleSearchFieldChange}
       />
-      {filteredMonsters.map((monster) => {
-        return (
-          <div key={monster.id}>
-            <h1>{monster.name}</h1>
-          </div>
-        );
-      })}
+      <CardList monsters={filteredMonsters} />
     </div>
   );
 };
