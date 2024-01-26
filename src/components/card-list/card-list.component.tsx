@@ -1,3 +1,4 @@
+import Card from '../card/card.component';
 /**
  * Represents a monster card.
  */
@@ -21,13 +22,9 @@ type CardListProps = {
  */
 const CardList = ({ monsters }: CardListProps) => {
   return (
-    <div>
+    <div className='card-list'>
       {monsters.map((monster) => {
-        return (
-          <div key={monster.id}>
-            <h1>{monster.name}</h1>
-          </div>
-        );
+        return <Card monster={monster} />;
       })}
     </div>
   );
