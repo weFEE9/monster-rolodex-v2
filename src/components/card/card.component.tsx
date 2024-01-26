@@ -1,5 +1,7 @@
 import { Monster } from '../card-list/card-list.component';
 
+import './card.styles.css';
+
 type CardProps = {
   monster: Monster;
 };
