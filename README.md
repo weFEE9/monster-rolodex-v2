@@ -19,6 +19,8 @@
 
 ## Monster rolodex - our first react project
 
+![monster rolodex](img/monster_rolodex.png)
+
 ### npx and create-react-app
 
 We'll use `npx` and `create-react-app` to create out react project
